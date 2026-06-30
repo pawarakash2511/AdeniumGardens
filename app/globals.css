@@ -14,6 +14,17 @@ html {
   scroll-behavior: auto; /* Lenis handles smooth scroll */
 }
 
+/* Remove gray tap flash on iOS/Android */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 767px) {
+  .marquee-track {
+    animation-duration: 20s;
+  }
+}
+
 body {
   background-color: var(--color-garden-cream);
   color: var(--color-garden-dark);
@@ -34,8 +45,18 @@ body {
   animation: marquee 30s linear infinite;
 }
 
-.marquee-wrapper:hover .marquee-track {
-  animation-play-state: paused;
+/* Pause marquee on hover — pointer devices only (avoids sticky-hover bug on touch) */
+@media (hover: hover) {
+  .marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Respect reduced-motion for marquee (WCAG 2.2.2) */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
 
 /* Custom scrollbar */

@@ -25,7 +25,7 @@ export default function VideoShowreel() {
           {playing ? (
             <iframe
               className="absolute inset-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID_PLACEHOLDER}?autoplay=1`}
+              src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID_PLACEHOLDER}?autoplay=1&playsinline=1`}
               title="Adenium Gardens Showreel"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

@@ -66,7 +66,8 @@ export default function Portfolio() {
                 <span className="text-sm mt-1">{tile.placeholder}</span>
               </div>
               {/* Info card */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/70 to-transparent translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+              {/* Always visible on mobile; slides up on desktop hover */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/70 to-transparent md:translate-y-1 md:group-hover:translate-y-0 transition-transform duration-300">
                 <h3 className="text-white font-display text-lg font-light">{tile.label}</h3>
                 <div className="flex items-center gap-1 text-garden-gold text-xs font-body mt-1">
                   <MapPin size={12} />

@@ -22,23 +22,22 @@ export default function CinematicHero() {
     const container = containerRef.current;
     if (!video || !container) return;
 
+    // Always hide ch1–ch3 before any branch so they don't stack on mobile
+    [ch1Ref, ch2Ref, ch3Ref].forEach((ref) => {
+      if (ref.current) gsap.set(ref.current, { opacity: 0 });
+    });
+
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Gentle fade-in for ch0 on all devices
+    gsap.fromTo(ch0Ref.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: "power2.out" });
 
     if (isMobile || prefersReduced) {
       video.loop = true;
       video.play().catch(() => {});
-      // Simple fade-in for visible chapter
-      gsap.to(ch0Ref.current, { opacity: 1, y: 0, duration: 1.2, delay: 0.3 });
       return;
     }
-
-    // Set initial states — ch0 starts visible; ch1–3 start hidden
-    [ch1Ref, ch2Ref, ch3Ref].forEach((ref) => {
-      if (ref.current) gsap.set(ref.current, { opacity: 0 });
-    });
-    // Gentle fade-in for ch0 on page load
-    gsap.fromTo(ch0Ref.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: "power2.out" });
 
     // Video scrub + chapter reveals from single progress driver
     const st = ScrollTrigger.create({
@@ -84,13 +83,14 @@ export default function CinematicHero() {
 
   return (
     /* Tall container — CSS sticky does the pinning */
-    <div id="home" ref={containerRef} className="relative" style={{ height: "500vh" }}>
+    <div id="home" ref={containerRef} className="relative h-screen md:h-[500vh]">
       <div className="sticky top-0 h-screen overflow-hidden bg-garden-green">
         {/* Background video */}
         <video
           ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover"
           muted
+          autoPlay
           playsInline
           preload="auto"
           poster={VIDEO_POSTER}
@@ -121,16 +121,16 @@ export default function CinematicHero() {
         {/* Chapter 1 — About Us */}
         <div
           ref={ch1Ref}
-          className="absolute inset-0 flex items-center px-8 md:px-20 lg:px-32"
+          className="absolute inset-0 flex items-center px-6 md:px-20 lg:px-32"
         >
           <div className="max-w-2xl">
             <p className="text-garden-gold text-xs uppercase tracking-[0.25em] mb-4 font-body">
               About Us
             </p>
-            <h2 className="font-display text-3xl md:text-4xl text-white font-light leading-snug mb-6">
+            <h2 className="font-display text-2xl md:text-4xl text-white font-light leading-snug mb-4 md:mb-6">
               Total Horticulture &amp; Landscape Excellence
             </h2>
-            <p className="text-white/80 text-base md:text-lg leading-relaxed font-body">
+            <p className="text-white/80 text-sm md:text-base leading-relaxed font-body line-clamp-3 md:line-clamp-none">
               {ABOUT_COPY.body[0]}
             </p>
           </div>
@@ -162,21 +162,21 @@ export default function CinematicHero() {
         {/* Chapter 3 — Founder */}
         <div
           ref={ch3Ref}
-          className="absolute inset-0 flex items-center justify-end px-8 md:px-20 lg:px-32"
+          className="absolute inset-0 flex items-center justify-center md:justify-end px-6 md:px-20 lg:px-32"
         >
-          <div className="max-w-lg text-right">
+          <div className="max-w-lg text-center md:text-right">
             <p className="text-garden-gold text-xs uppercase tracking-[0.25em] mb-4 font-body">
               Our Founder
             </p>
-            <h2 className="font-display text-3xl md:text-4xl text-white font-light leading-snug mb-3">
+            <h2 className="font-display text-2xl md:text-4xl text-white font-light leading-snug mb-3">
               {FOUNDER.name}
             </h2>
-            <p className="text-garden-gold text-sm mb-4 font-body">{FOUNDER.title}</p>
-            <p className="text-white/70 text-sm mb-8 font-body">{FOUNDER.credentials}</p>
-            <div className="grid grid-cols-2 gap-4">
+            <p className="text-garden-gold text-sm mb-3 font-body">{FOUNDER.title}</p>
+            <p className="text-white/70 text-xs md:text-sm mb-6 md:mb-8 font-body">{FOUNDER.credentials}</p>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               {FOUNDER_STATS.map((stat) => (
-                <div key={stat.label} className="text-right">
-                  <div className="font-display text-3xl text-garden-gold">
+                <div key={stat.label} className="text-center md:text-right">
+                  <div className="font-display text-2xl md:text-3xl text-garden-gold">
                     {stat.prefix}{stat.value}{stat.suffix}
                   </div>
                   <div className="text-white/60 text-xs font-body">{stat.label}</div>

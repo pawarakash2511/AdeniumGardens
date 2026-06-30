@@ -50,7 +50,7 @@ export default function Contact({ id }: { id?: string }) {
   };
 
   const field =
-    "w-full px-4 py-3 rounded-xl border border-garden-green/20 bg-white text-garden-dark text-sm font-body focus:outline-none focus:ring-2 focus:ring-garden-gold transition-shadow";
+    "w-full px-4 py-3 rounded-xl border border-garden-green/20 bg-white text-garden-dark text-base font-body focus:outline-none focus:ring-2 focus:ring-garden-gold transition-shadow";
   const errClass = "text-red-500 text-xs mt-1 font-body";
 
   return (
@@ -154,7 +154,7 @@ export default function Contact({ id }: { id?: string }) {
               <select
                 value={form.service}
                 onChange={(e) => setForm({ ...form, service: e.target.value })}
-                className={`${field} text-garden-dark/70`}
+                className={`${field} appearance-none text-garden-dark/70`}
               >
                 <option value="">Service Interested In</option>
                 {CONTACT.serviceOptions.map((s) => (

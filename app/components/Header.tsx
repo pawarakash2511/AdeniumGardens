@@ -17,6 +17,12 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   const scrollTo = (href: string) => {
     setMobileOpen(false);
     const id = href.replace("#", "");
@@ -76,9 +82,9 @@ export default function Header() {
             </button>
           </nav>
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger — min 44px touch target */}
           <button
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2.5"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -87,9 +93,9 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile nav overlay */}
+      {/* Mobile nav overlay — z-[60] sits above the z-50 header so close button is always tappable */}
       <div
-        className={`md:hidden fixed inset-0 z-40 bg-garden-green/98 transition-all duration-300 flex flex-col items-center justify-center gap-8 ${
+        className={`md:hidden fixed inset-0 z-[60] bg-garden-green/98 transition-opacity duration-300 flex flex-col items-center justify-center gap-8 ${
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{ top: 0 }}

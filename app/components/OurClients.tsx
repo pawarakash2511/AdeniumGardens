@@ -30,7 +30,7 @@ export default function OurClients() {
                 alt="Our clients — Huntsman, Godrej, Raheja Universal, Riverdale Resort, Bluegrass, Puravankara and more"
                 width={900}
                 height={450}
-                className="object-contain h-80 w-auto"
+                className="object-contain h-40 sm:h-56 md:h-72 w-auto"
               />
             </div>
             <div className="flex-shrink-0" aria-hidden="true">
@@ -39,7 +39,7 @@ export default function OurClients() {
                 alt=""
                 width={900}
                 height={450}
-                className="object-contain h-80 w-auto"
+                className="object-contain h-40 sm:h-56 md:h-72 w-auto"
               />
             </div>
           </div>
